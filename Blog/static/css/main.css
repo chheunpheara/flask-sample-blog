@@ -1,0 +1,88 @@
+.container {
+    width: 800px;
+    margin: auto;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.bordered-container {
+    border: 1px solid #eee;
+}
+
+.pad-10 {
+    padding: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin-left: -40px;
+}
+
+nav ul li {
+    display: inline;
+    border: 1px solid #333;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+nav ul li:hover {
+    background: #d00;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+nav ul li a:hover {
+    color: #fff;
+}
+
+.submit-button {
+    cursor: pointer;
+    background: darkblue;
+    color: #fff;
+    border-radius: 5px;
+}
+
+
+.cancel-button {
+    cursor: pointer;
+    background: #d00;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.success {
+    background: green;
+    color: #fff;
+    padding: 10px;
+    width: 100%;
+}
+
+.error {
+    background: #d00;
+    color: #fff;
+    padding: 10px;
+    width: 100%;
+}
+
+.table {
+    width: 100%;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #eee;
+    padding: 5px;
+}
+
+.dotted {
+    border: 1px dotted #aaa;
+}
+
+.dashed {
+    border: 1px dashed #aaa;
+}
+
+.text-right {
+    text-align: right;
+}

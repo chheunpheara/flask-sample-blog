@@ -1,0 +1,7 @@
+{% extends 'layout/main.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
+    <h3>{{ post.title }}</h3>
+    <hr>
+    {{ post.description }}
+{% endblock %}

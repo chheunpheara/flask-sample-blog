@@ -1,0 +1,22 @@
+{% extends 'layout/admin.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %} 
+<h3>Add Post</h3>
+<fieldset>
+    <legend>Post</legend>
+    <form action="" method="POST">
+        {% include 'flash.html' %}
+        <label for="title">Title <sup class="required">*</sup></label>
+        <br>
+        <input type="text" id="title" name="title">
+        <br>
+        <label for="short-descr">Short Description <sup class="required">*</sup></label>
+        <textarea name="short_descr" id="short-descr" cols="100" rows="10"></textarea>
+        <label for="descr">Description</label><br>
+        <textarea name="descr" id="descr" cols="100" rows="20"></textarea>
+        <br>
+        <input type="submit" value="{{ submit_tag }}" class="submit-button">
+        <a href="{{ url_for('PostAdmin') }}"><input type="button" class="cancel-button" value="Cancel"></a>
+    </form>
+</fieldset>
+{% endblock %}

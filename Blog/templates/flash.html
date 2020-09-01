@@ -1,0 +1,5 @@
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% for cat, msg in messages %}
+        <div class="{{ 'success' and cat == 'success' or 'error' }}">{{ msg }}</div>
+    {% endfor %}
+{% endwith %}
