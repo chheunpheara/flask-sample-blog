@@ -2,8 +2,10 @@ from flask.views import View
 from flask import render_template
 from flask import request, redirect, flash, url_for
 from .Model import Post as PostModel, db
+from Blog.src.Comment.Model import Comment
 from Blog.src.User.User import is_authenticated, get_user_id
 import datetime
+import sys
 
 class Post(View):
     # def __init__(self, template):
@@ -18,8 +20,30 @@ class Post(View):
 
 
 class PostView(View):
+
+    methods = ['GET', 'POST']
+
     def dispatch_request(self, id: int):
+        if request.method == 'POST':
+            comment = request.form['comment']
+            comment = comment.strip()
+            try:
+                db.session.add(
+                    Comment(
+                        comment=comment,
+                        post_id=id,
+                        user_id=2,
+                        created_at=datetime.datetime.now()
+                    )
+                )
+                db.session.commit()
+            except (Exception) as e:
+                flash(str(e), 'error')
+
+            return redirect(url_for(request.endpoint, id=id))
+
         post = db.session.query(PostModel).filter(PostModel.id==id).first()
+    
         return render_template('post/view.html', title='', post=post)
 
 

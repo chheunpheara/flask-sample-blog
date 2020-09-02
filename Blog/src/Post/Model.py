@@ -14,5 +14,6 @@ class Post(db.Model):
     status = db.Column(TINYINT(), server_default=str(1))
     user_id = db.Column(db.Integer, ForeignKey('users.id'))
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+    comment = relationship('Comment')
 
     

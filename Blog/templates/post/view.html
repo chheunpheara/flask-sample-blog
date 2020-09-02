@@ -1,7 +1,19 @@
 {% extends 'layout/main.html' %}
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
+    {% include 'flash.html' %}
     <h3>{{ post.title }}</h3>
     <hr>
     {{ post.description }}
+    <br><br>
+    {% include 'comment/form.html' %}
+
+    {% if post.comment %}
+        {% for comment in post.comment %}
+            <div class="comment">
+                <strong><small>Annonymous user</small></strong><br>
+                <p>{{ comment.comment }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

@@ -102,3 +102,9 @@ nav ul li a:hover {
 .heading {
     font-size: 1.2em;
 }
+
+.comment {
+    border: 1px dashed #eee;
+    padding: 5px;
+    margin-bottom: 10px;
+}
