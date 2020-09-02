@@ -8,11 +8,12 @@
     <br><br>
     {% include 'comment/form.html' %}
 
-    {% if post.comment %}
-        {% for comment in post.comment %}
+    {% if comments %}
+        {% for comment in comments %}
             <div class="comment">
-                <strong><small>Annonymous user</small></strong><br>
-                <p>{{ comment.comment }}</p>
+                <strong><small>{{ comment[2] }} {{ comment[1] }} </small></strong> <br><small style="color: #aaa;">{{ comment[0].created_at }}</small><br>
+                <p>{{ comment[0].comment }}</p>
+                <!-- <p><a href=""><small>Reply</small></a></p> -->
             </div>
         {% endfor %}
     {% endif %}

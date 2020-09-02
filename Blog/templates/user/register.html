@@ -1,0 +1,24 @@
+{% extends 'layout/main.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %} 
+<h3>User</h3>
+<fieldset>
+    <legend>User</legend>
+    <form action="" method="POST">
+        {% include 'flash.html' %}
+        <label for="last-name">Last Name <sup class="required">*</sup></label><br>
+        <input type="text" id="last-name" name="last_name"><br>
+        <label for="first-name">First Name <sup class="required">*</sup></label><br>
+        <input type="text" id="first-name" name="first_name"> <br>
+        <label for="username">Username <sup class="required">*</sup></label>
+        <br>
+        <input type="text" id="username" name="username">
+        <br>
+        <label for="password">Password <sup class="required">*</sup></label>
+        <br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Register" class="submit-button">
+        <a href="{{ url_for('PostHome') }}"><input type="button" class="cancel-button" value="Cancel"></a>
+    </form>
+</fieldset>
+{% endblock %}

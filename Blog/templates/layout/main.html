@@ -7,6 +7,9 @@
 </head>
 <body>
     <div class="container bordered-container pad-10">
+        {% if 'login' in session %}
+            <p>Welcome: {{ session['login']['name'] }} [<a href="{{ url_for('UserLogout') }}">Logout</a>]</p>
+        {% endif %}
         {% block content %} {% endblock %}
     </div>
 </body>

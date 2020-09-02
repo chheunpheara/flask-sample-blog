@@ -1,14 +1,23 @@
 from flask.views import View
 from flask import render_template, flash, redirect, request, url_for, session
-from Blog.src.User.Model import User as UserModel, db
+from Blog.src.User.Model import User as UserModel, db, FrontUser
 from functools import wraps
 import bcrypt
+import datetime
 
 def is_authenticated(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if 'user' not in session or 'user' in session and not session['user']['authenticated']:
             return redirect(url_for('UserAdminLogin'))
+        return func(*args, **kwargs)
+    return wrapper
+
+def is_authenticated_client(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if 'login' not in session:
+            return redirect(url_for('PostHome'))
         return func(*args, **kwargs)
     return wrapper
 
@@ -102,3 +111,88 @@ class UserAdminLogout(View):
         if 'user' in session:
             del session['user']
         return redirect(url_for('UserAdminLogin'))
+
+
+class UserLogin(View):
+    
+    methods = ['GET', 'POST']
+
+    def dispatch_request(self):
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+            
+            if not username or not password:
+                flash('Please enter username and password', 'error')
+                return redirect(url_for(request.endpoint))
+
+            # Find user
+            user_found = False
+            user = db.session.query(FrontUser).filter(FrontUser.username==username).first()
+            if user:
+                valid = bcrypt.checkpw(password.encode(), user.password.encode())
+                if valid:
+                    user_found = True
+                    session['login'] = {
+                        'name': user.last_name + ' ' + user.first_name,
+                        'id': user.id
+                    }
+                    return redirect(url_for('PostHome'))
+                    
+            flash('User not found', 'error')
+            return redirect(url_for(request.endpoint))
+
+        return render_template('user/login.html')
+
+
+class UserLogout(View):
+    def dispatch_request(self):
+        if 'login' in session:
+            del session['login']
+        return redirect(url_for('PostHome'))
+
+
+class UserRegister(View):
+
+    methods = ['GET', 'POST']
+
+    def dispatch_request(self):
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+            last_name = request.form['last_name']
+            first_name = request.form['first_name']
+
+            if not last_name or not first_name:
+                flash('Please enter first name and last name')
+                return redirect(url_for(request.endpoint))
+
+            if not username or not password:
+                flash('Please enter username and password', 'error')
+                return redirect(url_for(request.endpoint))
+
+            password = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+            username = username.lower()
+            try:
+                user = db.session.query(FrontUser).filter(FrontUser.username==username).first()
+                if user:
+                    flash('User already exists')
+                    return redirect(url_for(request.endpoint))
+
+                db.session.add(
+                    FrontUser(
+                        username=username,
+                        password=password,
+                        last_name=last_name,
+                        first_name=first_name,
+                        status=1,
+                        created_at=datetime.datetime.now()
+                    )
+                )
+                db.session.commit()
+                return redirect(url_for('UserLogin'))
+            except(Exception) as error:
+                flash(str(error), 'error')
+                return redirect(url_for(request.endpoint))
+
+        return render_template('user/register.html', title='Users')

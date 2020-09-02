@@ -1,9 +1,10 @@
 from flask.views import View
 from flask import render_template
-from flask import request, redirect, flash, url_for
+from flask import request, redirect, flash, url_for, session
 from .Model import Post as PostModel, db
 from Blog.src.Comment.Model import Comment
-from Blog.src.User.User import is_authenticated, get_user_id
+from Blog.src.User.Model import FrontUser
+from Blog.src.User.User import is_authenticated, get_user_id, is_authenticated_client
 import datetime
 import sys
 
@@ -27,12 +28,17 @@ class PostView(View):
         if request.method == 'POST':
             comment = request.form['comment']
             comment = comment.strip()
+            if not comment:
+                return redirect(url_for(request.endpoint, id=id))
             try:
+                if 'login' not in session:
+                    return redirect(url_for('UserLogin'))
+
                 db.session.add(
                     Comment(
                         comment=comment,
                         post_id=id,
-                        user_id=2,
+                        user_id=session['login']['id'],
                         created_at=datetime.datetime.now()
                     )
                 )
@@ -43,8 +49,16 @@ class PostView(View):
             return redirect(url_for(request.endpoint, id=id))
 
         post = db.session.query(PostModel).filter(PostModel.id==id).first()
+
+        comments = []
+        if post:
+            comments = db.session.query(Comment, FrontUser.first_name, FrontUser.last_name)\
+                .join(FrontUser)\
+                .filter(Comment.post_id==id)\
+                .order_by(Comment.created_at.asc())\
+                .all()
     
-        return render_template('post/view.html', title='', post=post)
+        return render_template('post/view.html', title='', post=post, comments=comments)
 
 
 ### Admin ###

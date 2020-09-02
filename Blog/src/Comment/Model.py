@@ -11,6 +11,6 @@ class Comment(db.Model):
     reply_to_comment = db.Column(db.Text())
     reply_to_comment_id = db.Column(db.Integer)
     post_id = db.Column(db.Integer, ForeignKey('posts.id'))
-    user_id = db.Column(db.Integer, ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, ForeignKey('post_users.id'))
     reply_to_comment_at = db.Column(db.DateTime)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
