@@ -1,6 +1,12 @@
 ### Blog - Flask Tutorial
 A sample blog application to learn Flask + SqlAlchemy
 
+### Prerequisite
+    Python3.5+
+
+### Virtualenv
+You are recommended to use virtualenv to manage python version for any application
+
 
 ### Installation
     pip install -r requirements.txt
