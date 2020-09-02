@@ -3,7 +3,8 @@
 {% block content %}
     <h3>Latest Posts</h3><hr>
     {% for post in posts %}
-        <h4>{{ post.title | safe | title }}</h4>
+        <p class="heading">{{ post.title | safe | title }}</p>
+        <p><small style="color: #aaa;">{{ post.created_at }}</small></p>
         {{ post.short_description }}
         <p class="text-right"><a href="{{ url_for('PostView', id=post.id) }}">View</a></p>
         <hr class="dashed">

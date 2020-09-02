@@ -86,3 +86,19 @@ nav ul li a:hover {
 .text-right {
     text-align: right;
 }
+
+.login {
+    border: 1px solid #eee;
+    margin: auto;
+    width: 300px;
+    background: #aaa;
+    padding: 30px;
+}
+
+.float-right {
+    float: right;
+}
+
+.heading {
+    font-size: 1.2em;
+}

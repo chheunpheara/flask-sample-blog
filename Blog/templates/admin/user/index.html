@@ -1,0 +1,35 @@
+{% extends 'layout/admin.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
+{% include 'flash.html' %}
+<h3>Users</h3>
+<hr>
+<a href="{{ url_for('UserAdminAdd') }}">New</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Login</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if users %}
+            {% for user in users %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>
+                        <a href="" title="Edit {{ user.username }}">Edit</a> &nbsp;
+                        <a href="" title="Delete {{ user.username }}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+                <tr>
+                    <td colspan="5">No user available</td>
+                </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,7 +1,8 @@
+{{ 'Welcome ' + session['user']['name'] if 'user' in session and session['user']['authenticated'] else '' }}  <a href="{{ url_for('UserAdminLogout') }}">[Logout]</a>
 <nav>
     <ul>
         <li><a href="{{ url_for('PostAdmin') }}">Posts</a></li>
-        <li><a href="">Users</a></li>
+        <li><a href="{{ url_for('UserAdmin') }}">Users</a></li>
     </ul>
 </nav>
 <hr>
